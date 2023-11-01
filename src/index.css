@@ -1,13 +1,159 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  html {
+    font-family: "Raleway", sans-serif;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  background: linear-gradient(black 25%, rgb(31, 41, 54) 58%, black 15%);
+  min-height: 100vh;
+  margin:0;
+  padding:0;
 }
+
+body {
+  background: rgb(31, 41, 55);
+}
+
+.nav {
+  z-index: 10;
+}
+
+.nav-links {
+  text-underline-offset: 1rem;
+}
+
+
+@media screen and (max-width: 900px) {
+
+  .about,
+  .contact,
+  .portfolio,
+  .experience,
+  .home
+  .cv {
+    text-align: center;
+    height: 100%;
+  }
+
+  .about,
+  .portfolio,
+  .experience {
+    padding-top: 10%;
+  }
+
+  .home img {
+    margin-top: 25%;
+  }
+
+  .small-screen {
+    display: block;
+  }
+
+  .big-screen {
+    display: none;
+  }
+
+  .gap-8 {
+    gap: 4rem;
+  }
+
+  .home h2 {
+    font-size: 2.7rem;
+    line-height: 3rem;
+    margin-top: 7%;
+  }
+
+  .portfolio-btn {
+    margin: auto;
+  }
+
+  .px-12 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+}
+
+/* // For the hover effect */
+.hover\:scale-105 {
+  transform: scale(1);
+  transform-origin: center;
+}
+
+.transition-transform {
+  transition: transform 0.3s ease;
+}
+/* 
+// Styling for initial text */
+.bg-black {
+  background-color: #000;
+}
+
+.bg-opacity-80 {
+  background-color: rgba(10, 0, 0, 0.8);
+}
+
+.text-white {
+  color: #fff;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+/* // Styling for expanded text */
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.transform {
+  transform: none;
+}
+
+.translate-y-full {
+  transform: translateY(-100%);
+}
+
+
+.overlay-animation {
+  animation: slide-up 0.5s ease forwards;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+
+
+
