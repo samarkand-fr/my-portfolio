@@ -47,7 +47,7 @@ const Portfolio = () => {
     {
       id: 6,
       src: argentBank,
-    expandedText: 'développer une application web pour le nouveau système d\'authentification des utilisateurs d\'Argent Bank.', 
+    expandedText: 'Develop a web application for the new user authentication system of Argent Bank.', 
       link: 'https://jadina-argebtbank.netlify.app/',
       repo: 'https://github.com/samarkand-fr/Argent-Bank-P13'
     },
