@@ -1,25 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
-@tailwind utilities; */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-@layer base {
-  html {
-    font-family: "Raleway", sans-serif;
-  }
-}
+@tailwind utilities;
 
 #root {
   background: linear-gradient(black 25%, rgb(31, 41, 54) 58%, black 15%);
   min-height: 100vh;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -34,14 +24,12 @@ body {
   text-underline-offset: 1rem;
 }
 
-
 @media screen and (max-width: 900px) {
-
   .about,
   .contact,
   .portfolio,
   .experience,
-  .home
+  .home,
   .cv {
     text-align: center;
     height: 100%;
@@ -83,10 +71,8 @@ body {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
 }
 
-/* // For the hover effect */
 .hover\:scale-105 {
   transform: scale(1);
   transform-origin: center;
@@ -95,8 +81,7 @@ body {
 .transition-transform {
   transition: transform 0.3s ease;
 }
-/* 
-// Styling for initial text */
+
 .bg-black {
   background-color: #000;
 }
@@ -121,7 +106,6 @@ body {
   opacity: 1;
 }
 
-/* // Styling for expanded text */
 .inset-0 {
   top: 0;
   right: 0;
@@ -136,7 +120,6 @@ body {
 .translate-y-full {
   transform: translateY(-100%);
 }
-
 
 .overlay-animation {
   animation: slide-up 0.5s ease forwards;
@@ -153,7 +136,157 @@ body {
   }
 }
 
+.hero-animation {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s ease-in, transform 0.8s ease-out;
+}
 
+.hero-animation.visible {
+  opacity: 1;
+  transform: scale(1);
+  animation: scaleUp 1s ease forwards;
+}
 
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
+.btn-primary {
+  @apply text-white w-fit px-6 py-3 my-2 flex items-center rounded-md bg-gradient-to-l from-rust to-black cursor-pointer hover:from-yellow-300 hover:to-yellow-700;
+}
 
+.background-theme {
+  @apply w-full h-full bg-gradient-to-b from-black to-neutral-300 text-white;
+}
+
+@keyframes fadeInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.animate__animated {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.animate__fadeInUp {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+.animate__fadeInLeft {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: fadeInLeft 1s ease forwards;
+  animation-delay: 0.5s;
+}
+
+.animate__fadeInRight {
+  opacity: 0;
+  transform: translateX(20px);
+  animation: fadeInRight 1s ease forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.scroll-up .animate__fadeInUp {
+  animation: fadeInDown 1s ease forwards;
+}
+
+.scroll-up .animate__fadeInLeft {
+  animation: fadeInRight 1s ease forwards;
+}
+
+.scroll-up .animate__fadeInRight {
+  animation: fadeInLeft 1s ease forwards;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-from-right {
+  animation: slideInFromRight 2s ease-out forwards;
+}

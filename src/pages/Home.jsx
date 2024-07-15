@@ -1,15 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import HeroImage from "../assets/images/edge.jpeg";
+import React, { useState, useEffect, useRef } from "react";
+import { RiArrowDownSLine } from "react-icons/ri";
+import HeroImage from "../assets/images/nature.jpeg";
+import Tatreez from "../assets/images/portfolio/tatreez.png";
+import  Glowup from "../assets/images/portfolio/glowup.png";
+import HeroSection from "../components/HeroSection";
+import Section from "../components/Section";
+import ScrollButton from "../components/ScrollButton";
+import "../index.css"; // Import your global styles here
 
 const Home = () => {
   const [text, setText] = useState("");
   const [index, setIndex] = useState(0);
+  const [scrolledDown, setScrolledDown] = useState(false);
   const typingSpeed = 80;
+  const firstSectionRef = useRef();
+  const secondSectionRef = useRef();
+  const prevScrollY = useRef(0); // Define prevScrollY here
+
+  const scrollToSection = (sectionRef) => {
+    console.log("Scrolling to section:", sectionRef.current);
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   useEffect(() => {
-    const textToType = "Hello my name is Dina";
+    const textToType = "Hi there! I'm Dina";
 
     if (index < textToType.length) {
       const timeout = setTimeout(() => {
@@ -21,6 +41,25 @@ const Home = () => {
         clearTimeout(timeout);
       };
     }
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrolledUp = currentScrollY < prevScrollY.current;
+      setScrolledDown(!scrolledUp);
+      prevScrollY.current = currentScrollY;
+
+      if (scrolledUp) {
+        document.body.classList.add("scroll-up");
+      } else {
+        document.body.classList.remove("scroll-up");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [index]);
 
   const heroStyle = {
@@ -28,42 +67,50 @@ const Home = () => {
   };
 
   return (
-    <div
-      name="home"
-      style={heroStyle}
-      className="relative h-screen w-full bg-cover bg-center bg-no-repeat home"
-    >
-      {/* Add the gradient overlay using a ::before pseudo-element */}
+    <div name="home" className="overflow-hidden">
       <div
-        className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-transparent to-cement"
-      ></div>
-
-      <div className="max-w-screen-lg mx-auto flex flex-col  items-center justify-start h-full px-4 md:flex-row">
-        <div className="flex flex-col justify-center h-full z-10 ">
-          <h1 className="text-4xl sm:text-7xl font-signature text-white mt-40">
-            FrontEnd Developer
-          </h1>
-          <div className="mt-40">
-            <p className="text-white text-2xl max-w-md">{text}</p>
-            <p className="text-vanilla py-4 max-w-md">
-            Welcome to my portfolio! With one year of professional experience, I specialize in transforming designs into seamless and captivating web experiences. Explore my projects and discover how I blend creativity with technical expertise to make the web a better place.
-            </p>
-          </div>
-          <div className="portfolio-btn mb-20">
-            <Link
-              to="/portfolio"
-              className="group text-white w-fit px-6 py-3 my-2 flex items-center rounded-md bg-gradient-to-l from-rust to-mustardYellow cursor-pointer hover:from-sageGreen hover:to-vanilla"
-            >
-              Portfolio
-              <span className="group-hover:rotate-90 duration-300">
-                <MdOutlineKeyboardArrowRight size={25} className="ml-1" />
-              </span>
-            </Link>
-          </div>
+        style={heroStyle}
+        className="relative h-screen w-full bg-cover bg-no-repeat bg-center "
+      >
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-neutral-900 via-transparent to-neutral-900"></div>
+        <HeroSection text={text} />
+        <div
+          className="absolute bottom-4 right-4 transform -translate-x-1/2 cursor-pointer"
+          onClick={() => scrollToSection(firstSectionRef)}
+        >
+          <RiArrowDownSLine
+            size={40}
+            className="bg-white p-2 rounded-full shadow-lg hover:bg-yellow-500 hover:text-black focus:outline-none"
+          />
         </div>
       </div>
+      <Section
+        refProp={firstSectionRef}
+        imageUrl={Tatreez}
+        className=" bg-gradient-to-t from-sky-100 to-black"
+        title="Tatreez"
+        content="This app is built with HTML, styled using Tailwind CSS, and uses JavaScript (Alpine.js) for functionality. It includes Font Awesome for icons and uses the Intersection Observer API for animations. "
+        githubLink="https://github.com/samarkand-fr/tatreez"
+        siteLink="https://tatreez.netlify.app/"
+      />
+      <Section
+        refProp={secondSectionRef}
+        imageUrl={Glowup}
+        className="bg-gradient-to-b from-black to-sky-100"
+        title="GlowUp"
+        content="The GlowUp App is a modern, visually engaging web application built with React. It uses pure CSS animations to create an interactive and aesthetically pleasing user experience."
+        githubLink="https://github.com/samarkand-fr/glowup"
+        siteLink="https://glowup-fk3w.vercel.app/"
+      />
+
+      <ScrollButton scrollToTop={scrollToTop} isVisible={scrolledDown} />
     </div>
   );
 };
 
 export default Home;
+
+
+   
+
+ 

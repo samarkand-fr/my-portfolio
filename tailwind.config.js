@@ -4,11 +4,10 @@ module.exports = {
     extend: {
       colors: {
         vanilla: '#D3C2B0',
-        mustardYellow: '#DAA520',
+        black: '#000',
         cement: '#84755F',
-        cementClaire:'#aca1a3',
-        sageGreen: '#8B956D',
-        rust:'#B7410E',
+        cementClaire: '#aca1a3',
+        rust: '#FF0000',
       },
     },
     fontFamily: {

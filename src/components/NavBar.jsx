@@ -1,13 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaHome, FaUser, FaFolder, FaCode, FaEnvelope } from "react-icons/fa";
 
 const NavBar = () => {
-  // State to control the menu open/close state
+  const [navVisible, setNavVisible] = useState(true);
   const [nav, setNav] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const prevScrollY = useRef(0);
 
-  // Array of navigation links with their text and icons
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > prevScrollY.current && navVisible) {
+        // Scrolling down
+        setNavVisible(false);
+      } else if (currentScrollY < prevScrollY.current || currentScrollY === 0) {
+        // Scrolling up or at the top
+        setNavVisible(true);
+        setNav(false); // Ensure that the mobile menu is closed when scrolling up
+      }
+
+      prevScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [navVisible]);
+
   const links = [
     { to: "/", text: "Home", icon: <FaHome /> },
     { to: "/about", text: "About", icon: <FaUser /> },
@@ -16,31 +46,66 @@ const NavBar = () => {
     { to: "/contact", text: "Contact", icon: <FaEnvelope /> },
   ];
 
-  // Function to close the mobile menu
   const closeMenu = () => {
     setNav(false);
   };
 
-  return (
-    <div className={`fixed top-10 right-0 z-50 p-4 bg-gradient-to-l from-rust to-mustardYellow  shadow bg-white rounded-lg ${nav ? 'h-auto' : 'w-16'} transition-all ease-in-out duration-300 flex flex-col sm:flex-row items-end justify-end`}>
-      {nav && (
-        // Mobile menu when 'nav' is true, displayed as a vertical list
-        <ul className={`flex ${nav ? 'flex-col sm:flex-row' : ''} space-y-10 sm:space-y-0 space-x-2 sm:space-x-10 mt-4 sm:mt-0`}>
+  const toggleNav = () => {
+    setNav(!nav);
+  };
 
-          {links.map(({ to, text, icon }) => (
-            <li key={to} className="nav-links cursor-pointer text-vanilla hover:text-white duration-200 transition-transform transform translate-x-0 hover:translate-x-2">
-              <Link to={to} onClick={closeMenu} className="flex items-center space-x-2 mr-3">
-                {icon}
-                <span>{text}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-      
-      <div onClick={() => setNav(!nav)} className="cursor-pointer text-vanilla">
-        {nav ? <FaTimes size={30} /> : <FaBars size={30} />}
+  return (
+    <div className="relative">
+      <div
+        className={`fixed top-0 right-0 py-10 z-50 md:pr-[5%] md:hover:pr-[5%] bg-transparent
+        hover:bg-gradient-to-b from-neutral-600 to-transparent w-full hover:p-8 transition-all ease-in-out duration-300 
+        ${navVisible ? "h-auto" : "h-0"}
+        overflow-hidden flex flex-col sm:flex-row items-center justify-end`}
+      >
+        {!isMobile && (
+          <ul className="flex space-x-10">
+            {links.map(({ to, text, icon }) => (
+              <li
+                key={to}
+                className="nav-links cursor-pointer text-neutral-300 hover:text-white duration-200 transition-transform transform translate-x-0 hover:translate-x-2"
+              >
+                <Link to={to} className="flex items-center space-x-2">
+                  {icon}
+                  <span>{text}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {isMobile && (
+          <div className="cursor-pointer text-vanilla" onClick={toggleNav}>
+            {nav ? <FaTimes size={30} /> : <FaBars size={30} />}
+          </div>
+        )}
       </div>
+
+      {isMobile && nav && (
+        <div className="fixed top-0 left-0 w-full h-full z-40 bg-neutral-900 bg-opacity-90 flex flex-col items-center justify-center">
+          <ul className="flex flex-col space-y-4 mt-4 text-center">
+            {links.map(({ to, text, icon }) => (
+              <li
+                key={to}
+                className="nav-links cursor-pointer text-vanilla hover:text-white duration-200 transition-transform transform translate-x-0 hover:translate-x-2"
+              >
+                <Link
+                  to={to}
+                  onClick={closeMenu}
+                  className="flex items-center space-x-2 justify-center"
+                >
+                  {icon}
+                  <span>{text}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
