@@ -21,45 +21,45 @@ const Portfolio = () => {
       src: fishEye,
       expandedText:
         "A website that allows independent photographers to showcase their best work.",
-      link: "...",
-      repo: "...",
+      link: "https://samarkand-fr.github.io/Front-End-Fisheye/",
+      repo: "https://github.com/samarkand-fr/Front-End-Fisheye",
     },
     {
       id: 2,
       src: dashboard,
       expandedText:
         "An application that allows users to track their fitness progress.",
-      link: "...",
-      repo: "...",
+      link: "https://samarkand-fr.github.io/P12-front-end-dashboard-/",
+      repo: "https://github.com/samarkand-fr/P12-front-end-dashboard-",
     },
     {
       id: 3,
       src: resto,
       expandedText: "A food delivery website with interactive features.",
-      link: "...",
-      repo: "...",
+      link: "https://ohmyfood-jadina.netlify.app/",
+      repo: "https://github.com/samarkand-fr/projet3-ohmyfood",
     },
     {
       id: 4,
       src: hrnet,
       expandedText:
         "Modernized existing App into React, replacing jQuery plugins.",
-      link: "...",
-      repo: "...",
+      link: "https://jadina-hrnet.netlify.app/",
+      repo: "https://github.com/samarkand-fr/wealth-health",
     },
     {
       id: 5,
       src: petitplat,
       expandedText: "A search engine for recipes made with JS.",
-      link: "...",
-      repo: "...",
+      link: "https://jadina-petitplats.netlify.app/",
+      repo: "https://github.com/samarkand-fr/P7-front-end-search-engine",
     },
     {
       id: 6,
       src: argentBank,
       expandedText: "Authentication system for Argent Bank.",
-      link: "...",
-      repo: "...",
+      link: "https://jadina-argebtbank.netlify.app/",
+      repo: "https://github.com/samarkand-fr/Argent-Bank-P13",
     },
   ];
 
