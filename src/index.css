@@ -1,21 +1,29 @@
+/* ===========================
+   FONTS
+=========================== */
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 
+/* ===========================
+   TAILWIND
+=========================== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-#root {
-  background: linear-gradient(black 25%, rgb(31, 41, 54) 58%, black 15%);
-  min-height: 100vh;
+/* ===========================
+   GLOBAL THEME
+=========================== */
+body, #root {
   margin: 0;
   padding: 0;
+  background-color: #000;
+  font-family: "Raleway", sans-serif;
 }
 
-body {
-  background: rgb(31, 41, 55);
-}
-
+/* ===========================
+   NAVIGATION
+=========================== */
 .nav {
   z-index: 10;
 }
@@ -24,6 +32,9 @@ body {
   text-underline-offset: 1rem;
 }
 
+/* ===========================
+   RESPONSIVE FIXES
+=========================== */
 @media screen and (max-width: 900px) {
   .about,
   .contact,
@@ -32,17 +43,7 @@ body {
   .home,
   .cv {
     text-align: center;
-    height: 100%;
-  }
-
-  .about,
-  .portfolio,
-  .experience {
-    padding-top: 10%;
-  }
-
-  .home img {
-    margin-top: 25%;
+    height: auto;
   }
 
   .small-screen {
@@ -53,87 +54,28 @@ body {
     display: none;
   }
 
-  .gap-8 {
-    gap: 4rem;
-  }
-
   .home h2 {
     font-size: 2.7rem;
     line-height: 3rem;
     margin-top: 7%;
   }
-
-  .portfolio-btn {
-    margin: auto;
-  }
-
-  .px-12 {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
 }
 
-.hover\:scale-105 {
-  transform: scale(1);
-  transform-origin: center;
-}
-
-.transition-transform {
-  transition: transform 0.3s ease;
-}
-
-.bg-black {
-  background-color: #000;
-}
-
-.bg-opacity-80 {
-  background-color: rgba(10, 0, 0, 0.8);
-}
-
-.text-white {
-  color: #fff;
-}
-
-.p-2 {
-  padding: 0.5rem;
-}
-
-.opacity-0 {
-  opacity: 0;
-}
-
-.opacity-100 {
-  opacity: 1;
-}
-
-.inset-0 {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.transform {
-  transform: none;
-}
-
-.translate-y-full {
-  transform: translateY(-100%);
+/* ===========================
+   HERO + ENTRY ANIMATIONS
+=========================== */
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
 }
 
 .overlay-animation {
   animation: slide-up 0.5s ease forwards;
 }
 
-@keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
 }
 
 .hero-animation {
@@ -148,145 +90,127 @@ body {
   animation: scaleUp 1s ease forwards;
 }
 
-@keyframes scaleUp {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.btn-primary {
-  @apply text-white w-fit px-6 py-3 my-2 flex items-center rounded-md bg-gradient-to-l from-rust to-black cursor-pointer hover:from-yellow-300 hover:to-yellow-700;
-}
-
-.background-theme {
-  @apply w-full h-full bg-gradient-to-b from-black to-neutral-300 text-white;
-}
-
+/* ===========================
+   COMPONENT ANIMATIONS
+=========================== */
 @keyframes fadeInFromLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-50px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fadeInFromRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(50px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-  }
-  to {
-    transform: scale(1);
-  }
+  from { transform: scale(0.9); }
+  to   { transform: scale(1); }
 }
 
-.animate__animated {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+/* ===========================
+   PALESTINIAN THEME COLORS
+=========================== */
+.text-neon-green    { color: #00ff88; }
+.border-neon-green  { border-color: #00ff88; }
+.bg-neon-green      { background-color: #00ff88; }
+
+.text-palestineRed    { color: #ff2b4f; }
+.text-palestineGreen  { color: #00ff88; }
+.text-palestineWhite  { color: #f8f8f8; }
+.text-palestineBlack  { color: #000; }
+
+.bg-palestineRed      { background-color: #ff2b4f; }
+.bg-palestineGreen    { background-color: #00ff88; }
+.bg-palestineBlack    { background-color: #000; }
+
+/* ===========================
+   BUTTON (PRIMARY)
+=========================== */
+.btn-primary {
+  @apply text-black font-semibold px-6 py-3 rounded-md my-2
+         bg-gradient-to-r from-[#b85757] to-[#4fa27d]
+         shadow-[0_0_10px_#b85757]
+         hover:shadow-[0_0_15px_#4fa27d]
+         hover:scale-105 transition-all;
 }
 
-.animate__fadeInUp {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1s ease forwards;
+
+/* ===========================
+   SECTIONS THEME
+=========================== */
+.background-theme {
+  @apply w-full bg-gradient-to-b from-black via-neutral-900 to-black text-white;
 }
 
-.animate__fadeInLeft {
-  opacity: 0;
-  transform: translateX(-20px);
-  animation: fadeInLeft 1s ease forwards;
-  animation-delay: 0.5s;
+/* ===========================
+   NEON TITLE
+=========================== */
+@keyframes neonTitle {
+  from { opacity: 0; filter: blur(8px); }
+  to   { opacity: 1; filter: blur(0); }
 }
 
-.animate__fadeInRight {
-  opacity: 0;
-  transform: translateX(20px);
-  animation: fadeInRight 1s ease forwards;
-  animation-delay: 1s;
-}
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.scroll-up .animate__fadeInUp {
-  animation: fadeInDown 1s ease forwards;
-}
-
-.scroll-up .animate__fadeInLeft {
-  animation: fadeInRight 1s ease forwards;
-}
-
-.scroll-up .animate__fadeInRight {
-  animation: fadeInLeft 1s ease forwards;
-}
-
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInFromRight {
+@keyframes kufiyaPulseStrong {
   0% {
-    transform: translateX(100%);
+    opacity: 0.4;
+    transform: scaleY(1);
+    box-shadow: 0 0 8px rgba(79, 162, 125, 0.4),
+                0 0 12px rgba(184, 87, 87, 0.35);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.15);
+    box-shadow: 0 0 18px rgba(79, 162, 125, 0.8),
+                0 0 26px rgba(184, 87, 87, 0.7);
   }
   100% {
-    transform: translateX(0);
+    opacity: 0.4;
+    transform: scaleY(1);
+    box-shadow: 0 0 8px rgba(79, 162, 125, 0.4),
+                0 0 12px rgba(184, 87, 87, 0.35);
   }
 }
 
-.animate-slide-in-from-right {
-  animation: slideInFromRight 2s ease-out forwards;
+
+
+@keyframes kufiyaWave {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  50% {
+    background-position: 40px 40px, -40px -40px;
+  }
+  100% {
+    background-position: 0 0, 0 0;
+  }
+}
+
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 5s ease infinite;
+}
+@keyframes gradient-vertical {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.animate-gradient-vertical {
+  background-size: 100% 200%;
+  animation: gradient-vertical 4s ease-in-out infinite;
 }

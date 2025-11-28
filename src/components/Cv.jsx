@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaArrowDown } from 'react-icons/fa';
-import CVImage from "../assets/images/cv.png";
+import CVImage from "../assets/images/cv_dina_jannoun.png";
 function Cv() {
   return (
     <div

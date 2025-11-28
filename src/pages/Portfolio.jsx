@@ -1,14 +1,19 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import PortfolioItem from "../components/PortfolioItem";
+import { useTheme } from "../context/ThemeContext";
+
 import resto from "../assets/images/portfolio/resto.png";
 import fishEye from "../assets/images/portfolio/fishEye.png";
 import dashboard from "../assets/images/portfolio/dashboard.png";
 import petitplat from "../assets/images/portfolio/petitplats.png";
 import hrnet from "../assets/images/portfolio/hrnet.png";
 import argentBank from "../assets/images/portfolio/argentBank.png";
-import PortfolioItem from "../components/PortfolioItem";
+import KufiyaBackground from "../components/KufiyaBackground";
 
 const Portfolio = () => {
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const { theme } = useTheme();
 
   const portfolios = [
     {
@@ -16,87 +21,122 @@ const Portfolio = () => {
       src: fishEye,
       expandedText:
         "A website that allows independent photographers to showcase their best work.",
-      link: "https://samarkand-fr.github.io/Front-End-Fisheye/",
-      repo: "https://github.com/samarkand-fr/Front-End-Fisheye",
+      link: "...",
+      repo: "...",
     },
     {
       id: 2,
       src: dashboard,
       expandedText:
-        "An application that allows users to track their fitness progress by providing visual representations of their activity data.",
-      link: "https://samarkand-fr.github.io/P12-front-end-dashboard-/",
-      repo: "https://github.com/samarkand-fr/P12-front-end-dashboard-",
+        "An application that allows users to track their fitness progress.",
+      link: "...",
+      repo: "...",
     },
     {
       id: 3,
       src: resto,
-      expandedText:
-        "A food delivery website project with interactive features.",
-      link: "https://ohmyfood-jadina.netlify.app/",
-      repo: "https://github.com/samarkand-fr/projet3-ohmyfood",
+      expandedText: "A food delivery website with interactive features.",
+      link: "...",
+      repo: "...",
     },
     {
       id: 4,
       src: hrnet,
       expandedText:
-        "Modernize an existing App by converting it into a React-based application and replacing the problematic jQuery plugins with efficient React components.",
-      link: "https://jadina-hrnet.netlify.app/",
-      repo: "https://github.com/samarkand-fr/wealth-health",
+        "Modernized existing App into React, replacing jQuery plugins.",
+      link: "...",
+      repo: "...",
     },
     {
       id: 5,
       src: petitplat,
-      expandedText:
-        "A search engine for recipes made with javascript.", // Expanded state text
-      link: "https://jadina-petitplats.netlify.app/",
-      repo: "https://github.com/samarkand-fr/P7-front-end-search-engine",
+      expandedText: "A search engine for recipes made with JS.",
+      link: "...",
+      repo: "...",
     },
     {
       id: 6,
       src: argentBank,
-      expandedText:
-        "Develop a web application for the new user authentication system of Argent Bank.",
-      link: "https://jadina-argebtbank.netlify.app/",
-      repo: "https://github.com/samarkand-fr/Argent-Bank-P13",
+      expandedText: "Authentication system for Argent Bank.",
+      link: "...",
+      repo: "...",
     },
   ];
 
-  const visibleProjects = showAllProjects ? portfolios : portfolios.slice(0, 3);
+  const visibleProjects = showAllProjects ? portfolios : portfolios.slice(0, 4);
+
+  const container = {
+    show: {
+      transition: { staggerChildren: 0.18 },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0 },
+  };
 
   return (
     <div
       name="portfolio"
-      className="bg-gradient-to-b from-black to-neutral-300 w-full text-white min-h-screen portfolio pt-5"
+      className={`
+    relative
+    min-h-screen w-full px-6 md:px-12 py-20
+    transition-colors duration-500
+    ${
+      theme === "dark"
+        ? "bg-[#0f0f0f] text-[#e5e5e5]"
+        : "bg-white text-[#0f0f0f]"
+    }
+  `}
     >
-      <div className="max-w-screen-lg p-4 mx-auto flex flex-col justify-center w-full h-full">
-        <div className="pb-8">
-          <p className="text-4xl font-bold inline border-b-4 border-rust">
-            Portfolio
-          </p>
-        </div>
+      <KufiyaBackground />
+      {/* TITLE */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        className="text-center mb-14"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold inline-block border-b-4 border-[#b85757] pb-2">
+          Portfolio
+        </h2>
+      </motion.div>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 px-12 mt-5 sm:px-0 mb-8">
-          {visibleProjects.map(({ id, src, link, repo, expandedText }, index) => (
-            <PortfolioItem
-              key={id}
-              src={src}
-              link={link}
-              repo={repo}
-              expandedText={expandedText}
-              delay={index * 0.3} 
-            />
-          ))}
-        </div>
+      {/* GRID (2 cards per row, spacious) */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="
+          grid 
+          grid-cols-1 sm:grid-cols-2 
+          gap-12           
+          max-w-5xl mx-auto
+        "
+      >
+        {visibleProjects.map((project) => (
+          <motion.div key={project.id} variants={item}>
+            <PortfolioItem {...project} />
+          </motion.div>
+        ))}
+      </motion.div>
 
-        {!showAllProjects && (
-          <button
-            className="self-center btn-primary"
-            onClick={() => setShowAllProjects(true)}
-          >
-            See More Projects
-          </button>
-        )}
-      </div>
+      {/* MORE BUTTON */}
+      {!showAllProjects && (
+        <motion.button
+          className="mt-12 mx-auto block px-7 py-3 rounded-lg font-medium text-white"
+          style={{
+            background: "linear-gradient(90deg,#4fa27d,#b85757)",
+            boxShadow: "0 0 12px #4fa27d",
+          }}
+          onClick={() => setShowAllProjects(true)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          Show More
+        </motion.button>
+      )}
     </div>
   );
 };

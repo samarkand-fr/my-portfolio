@@ -2,77 +2,108 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { motion } from "framer-motion";
-import "../index.css";
+import { useTheme } from "../context/ThemeContext";
+import KufiyaBackground from "../components/KufiyaBackground";
 
 const About = () => {
+  const { theme } = useTheme();
+
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i) => ({
       opacity: 1,
       y: 0,
-      transition: {
-        delay: i * 0.3,
-        duration: 0.7,
-      },
+      transition: { delay: i * 0.3, duration: 0.7 },
     }),
   };
 
   return (
-    <div name="about" className="about background-theme">
-      <div className="max-w-screen-lg p-4 mx-auto flex flex-col justify-center w-full h-full">
+    <div
+      name="about"
+      className={`relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 transition-colors duration-500  ${
+        theme === "dark"
+          ? "bg-[#0f0f0f] text-[#e5e5e5]"
+          : "bg-white text-[#0f0f0f]"
+      }`}
+    >
+      <KufiyaBackground />
+
+      <div className="relative max-w-3xl w-full z-10">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={textVariants}
           custom={0}
-          className="pb-8 mt-40"
+          className="pb-8 text-center mt-32"
         >
-          <p className="text-4xl font-bold inline border-b-4 border-rust">About</p>
+          <h2
+            className="
+              text-4xl md:text-5xl font-bold inline-block border-b-4
+              border-[#4fa27d] 
+              dark:border-[#b85757]
+            "
+          >
+            About
+          </h2>
         </motion.div>
 
+        {/* PARAGRAPH 1 */}
         <motion.p
           initial="hidden"
           animate="visible"
           variants={textVariants}
           custom={1}
-          className="text-xl mt-5"
+          className="
+            text-lg md:text-xl mb-6 leading-relaxed
+            text-[#444] 
+            dark:text-[#cfcfcf]
+          "
         >
-          I am a web developer, working in frontend programming. Excited for
-          improving my skills and learning new technologies. I'm open to learn
-          and work with any web technology and currently interested in improving
-          the Backend programming.
+          I am a front-end developer dedicated to building modern, interactive
+          web experiences. Drawing inspiration from cultural patterns, colors,
+          and storytelling, I design intuitive, user-centered interfaces with a
+          clean and minimalistic approach.
         </motion.p>
 
+        {/* PARAGRAPH 2 */}
         <motion.p
           initial="hidden"
           animate="visible"
           variants={textVariants}
           custom={2}
-          className="text-xl mb-10"
+          className="
+            text-lg md:text-xl mb-8 leading-relaxed
+            text-[#444]
+            dark:text-[#cfcfcf]
+          "
         >
-          I thrive on crafting code from the ground up and transforming concepts
-          into reality. If you're looking for a dedicated professional to bring
-          your ideas to life, let's connect and collaborate on your project.{" "}
-          <br /> <br />
-          My approach values minimalistic design, purposeful content branding,
-          and creating user-centric experiences. Together, we can explore how to
-          optimize your project for higher conversion rates.
-          <br /> <br />I take pleasure in crafting and refining unique
-          identities for products and services, increasing visibility on search
-          engines and social media platforms, and driving more organic traffic.
-          Let's work together to achieve your goals!
+          My work emphasizes performance, accessibility, smooth motion, and
+          layouts subtly influenced by identity patterns.
         </motion.p>
 
+        {/* BUTTON */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={textVariants}
           custom={3}
+          className="text-center"
         >
-          <Link to="/cv" className="btn-primary group">
+          <Link
+            to="/cv"
+            className="
+              inline-flex items-center px-6 py-3 rounded-md font-semibold 
+              text-white dark:text-[#0f0f0f]
+            "
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(79,162,125,0.95), rgba(184,87,87,0.95))",
+              boxShadow: "0 6px 18px rgba(79,162,125,0.12)",
+            }}
+          >
             View My CV
-            <span className="group-hover:rotate-90 duration-300">
-              <MdOutlineKeyboardArrowRight size={25} className="ml-1" />
+            <span className="ml-2 transition-transform duration-300 group-hover:rotate-90">
+              <MdOutlineKeyboardArrowRight size={25} />
             </span>
           </Link>
         </motion.div>
