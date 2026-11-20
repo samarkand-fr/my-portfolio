@@ -427,7 +427,7 @@ function Cv() {
                     </h4>
                     <span className="text-xs font-bold text-[#4fa27d]">2025–2026</span>
                   </div>
-                  <p className="text-xs font-semibold text-gray-600 dark:text-gray-200 font-medium mt-0.5">
+                  <p className="text-xs text-gray-600 dark:text-gray-200 font-medium mt-0.5">
                     Formation diplômante – Niveau 6 (Bac+3/4)
                   </p>
                   <p className="text-xs text-gray-700 dark:text-gray-100 font-medium mt-1">
@@ -441,9 +441,9 @@ function Cv() {
                     <h4 className="text-xs sm:text-sm font-bold text-[#111] dark:text-white">
                       DÉVELOPPEUR D'APPLICATION JAVASCRIPT / REACT | OpenClassrooms
                     </h4>
-                    <span className="text-xs font-bold text-gray-600 dark:text-gray-200 font-medium">2022–2023</span>
+                    <span className="text-xs text-gray-600 dark:text-gray-200 font-medium">2022–2023</span>
                   </div>
-                  <p className="text-xs font-semibold text-gray-600 dark:text-gray-200 font-medium mt-0.5">
+                  <p className="text-xs text-gray-600 dark:text-gray-200 font-medium mt-0.5">
                     Formation en développement frontend
                   </p>
                   <p className="text-xs text-gray-700 dark:text-gray-100 font-medium mt-1">
@@ -457,7 +457,7 @@ function Cv() {
                     <h4 className="text-xs sm:text-sm font-bold text-[#111] dark:text-white">
                       LICENCE SCIENTIFIQUE – MATHÉMATIQUES & INFORMATIQUE | Lebanese American University (LAU)
                     </h4>
-                    <span className="text-xs font-semibold text-gray-600 dark:text-gray-200 font-medium">1988–1991</span>
+                    <span className="text-xs  text-gray-600 dark:text-gray-200 font-medium">1988–1991</span>
                   </div>
                   <p className="text-xs text-gray-700 dark:text-gray-100 font-medium mt-1">
                     Algorithmique, structures de données, mathématiques appliquées, calcul matriciel et logique.
