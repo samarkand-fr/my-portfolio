@@ -26,7 +26,7 @@ The latest version is maintained in the:
 
 ## 📌 Statut du déploiement
 
-- **Déploiement en ligne :** Déployé sur **Netlify** — [Live Demo](https://portfoliov3.netlify.app)
+- **Déploiement en ligne :** Déployé sur **Netlify** — [Live Demo](https://jadina-portfolio-v3.netlify.app/)
 - **État local actuel :** Compilation validée via `npm run build` (0 erreur, 0 avertissement) et développement actif en local.
 
 ---
