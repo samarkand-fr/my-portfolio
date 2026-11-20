@@ -1,19 +1,34 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import NavBar from "./components/NavBar";
 import SocialLinks from "./components/SocialLinks";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Portfolio from "./pages/Portfolio";
 import Experience from "./pages/Experience";
 import Contact from "./pages/Contact";
 import CV from "./components/Cv";
-import Footer from "./components/Footer";
+import KufiyaBackground from "./components/KufiyaBackground";
+import "./index.css";
 
-function App() {
+function AppContent() {
+  const { theme } = useTheme();
+
   return (
-    <Router>
-      <div>
+    <div
+      className={`min-h-screen relative overflow-x-hidden transition-colors duration-500 selection:bg-[#ff2b4f] selection:text-white ${
+        theme === "dark"
+          ? "bg-[#0f0f0f] text-[#e5e5e5]"
+          : "bg-[#f9f9f9] text-[#111]"
+      }`}
+    >
+      {/* Global Kufiya Background across all pages */}
+      <KufiyaBackground className="fixed inset-0" />
+
+      {/* Main Application Container */}
+      <div className="relative z-10">
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} exact />
@@ -27,8 +42,17 @@ function App() {
       </div>
 
       <SocialLinks />
-    </Router>
-     
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </ThemeProvider>
   );
 }
 

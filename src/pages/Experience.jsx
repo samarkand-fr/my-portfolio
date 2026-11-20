@@ -1,186 +1,334 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import html from "../assets/images/icons/html.png";
-import css from "../assets/images/icons/css.png";
-import javascript from "../assets/images/icons/javascript.png";
-import reactImage from "../assets/images/icons/react.png";
-import nextjs from "../assets/images/icons/nextjs.png";
-import restApi from "../assets/images/icons/api.png";
-import github from "../assets/images/icons/github.png";
-import tailwind from "../assets/images/icons/tailwind.png";
-import node from "../assets/images/icons/node.png";
-import express from "../assets/images/icons/express.png";
-import mongodb from "../assets/images/icons/mongodb.png";
-import redux from "../assets/images/icons/redux.png";
+import { useTheme } from "../context/ThemeContext";
+import KufiyaBackground from "../components/KufiyaBackground";
 
-const ProgressBar = ({ progress }) => (
-  <div className="absolute bottom-0 left-0 w-full bg-neutral-200 rounded-b-lg">
-    <div className="h-3 bg-green-700 rounded-b-lg" style={{ width: `${progress}%` }}>
-      <span className="absolute left-0 text-white text-xs flex items-center pl-2 ">{progress}%</span>
-    </div>
+import {
+  SiPython,
+  SiDjango,
+  SiPostgresql,
+  SiSqlite,
+  SiDocker,
+  SiGithubactions,
+  SiSentry,
+  SiTailwindcss,
+  SiRedux,
+  SiJavascript,
+  SiTypescript,
+  SiPytest,
+  SiRender,
+} from "react-icons/si";
+import { FaGitAlt, FaShieldAlt, FaDatabase } from "react-icons/fa";
+
+// ------------------- PROGRESS BAR -------------------
+const ProgressBar = ({ progress, theme }) => (
+  <div
+    className={`absolute bottom-0 left-0 w-full rounded-b-xl overflow-hidden ${
+      theme === "dark" ? "bg-[#1b1b1b]" : "bg-[#e5e5e5]"
+    }`}
+  >
+    <div
+      className="h-2 rounded-b-xl transition-all duration-500"
+      style={{
+        width: `${progress}%`,
+        background: "linear-gradient(90deg, #4fa27d, #b85757)",
+        boxShadow: "0 0 8px rgba(79, 162, 125, 0.6)",
+      }}
+    />
   </div>
 );
 
-const TechnologyCard = ({ src, title, progress, link, style, delay }) => {
+// ------------------- TECHNOLOGY CARD -------------------
+const TechnologyCard = ({ icon, title, category, progress, link, delay }) => {
+  const { theme } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const handleClick = () => {
-    window.open(link, "_blank");
-  };
 
   return (
     <motion.div
-      className={`shadow-md py-2 rounded-lg ${style} relative cursor-pointer`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-      style={{ width: '220px', height: '170px' }}
-      initial={{ opacity: 0, y: -40 }}
+      className={`
+        relative cursor-pointer rounded-2xl p-5 transition-all duration-300
+        flex flex-col items-center justify-center border text-center group
+        ${
+          theme === "dark"
+            ? "bg-[#0f0f0f]/80 border-[#1f1f1f] text-white hover:border-[#4fa27d]/60 hover:shadow-[0_0_22px_rgba(79,162,125,0.35)]"
+            : "bg-white/90 border-gray-200 text-[#0f0f0f] hover:border-[#4fa27d]/60 hover:shadow-[0_8px_24px_rgba(79,162,125,0.2)]"
+        }
+      `}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => link && window.open(link, "_blank")}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
+      whileHover={{ y: -4, scale: 1.02 }}
     >
-      {isHovered && <ProgressBar progress={progress} />}
-      <img src={src} alt={title} className="w-16 mx-auto mt-2" />
-      <div className="text-center">
-        <p className="text-white font-semibold">{title}</p>
-        {isHovered && (
-          <p className="text-xs text-white mt-3">View Projects</p>
+      {/* ICON */}
+      <div className="w-14 h-14 mb-3 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
+        {icon}
+      </div>
+
+      {/* TITLE */}
+      <p className="font-bold text-sm md:text-base mb-1">{title}</p>
+      <span className="text-[11px] font-medium text-gray-600 dark:text-gray-200 mb-2">
+        {category}
+      </span>
+
+      {/* HOVER DETAILS */}
+      <div className="h-5 flex items-center justify-center">
+        {isHovered ? (
+          <span className="text-xs font-bold text-[#4fa27d] dark:text-[#00ff88]">
+            {progress}% Maîtrise
+          </span>
+        ) : (
+          <span className="text-[11px] text-gray-500 dark:text-gray-300 font-medium">
+            Voir projet ↗
+          </span>
         )}
       </div>
+
+      {/* PROGRESS BAR */}
+      <ProgressBar progress={progress} theme={theme} />
     </motion.div>
   );
 };
 
+// ------------------- EXPERIENCE SECTION -------------------
 const Experience = () => {
+  const { theme } = useTheme();
+  const [activeTab, setActiveTab] = useState("all");
+
   const techs = [
     {
-      id: 1,
-      src: html,
-      title: "HTML",
-      style: "shadow-orange-500",
+      id: "python",
+      icon: <SiPython className="text-[#3776AB]" />,
+      title: "Python 3.10+",
+      category: "Backend & POO",
+      tab: "backend",
+      progress: 90,
+      link: "https://github.com/samarkand-fr/Python-OC-Lettings-FR",
+    },
+    {
+      id: "django",
+      icon: <SiDjango className="text-[#092E20] dark:text-[#44B78B]" />,
+      title: "Django",
+      category: "Architecture Modulaire",
+      tab: "backend",
+      progress: 88,
+      link: "https://github.com/samarkand-fr/Python-OC-Lettings-FR",
+    },
+    {
+      id: "drf",
+      icon: <SiDjango className="text-[#b85757]" />,
+      title: "Django REST Framework",
+      category: "APIs & Permissions",
+      tab: "backend",
       progress: 85,
-      link: "https://github.com/samarkand-fr/tatreez",
+      link: "https://github.com/samarkand-fr/SoftDesk_API-RESTful",
     },
     {
-      id: 2,
-      src: css,
-      title: "CSS",
-      style: "shadow-blue-500",
+      id: "postgresql",
+      icon: <SiPostgresql className="text-[#336791]" />,
+      title: "PostgreSQL 16",
+      category: "SGBD Relationnel",
+      tab: "backend",
       progress: 85,
-      link: "https://github.com/samarkand-fr/Kasa_p11/tree/main/Front-End/src/sass",
+      link: "https://github.com/samarkand-fr/CRM-epic-events",
     },
     {
-      id: 3,
-      src: javascript,
-      title: "JavaScript",
-      style: "shadow-yellow-500",
+      id: "sqlalchemy",
+      icon: <FaDatabase className="text-[#e28743]" />,
+      title: "SQLAlchemy 2.0+",
+      category: "ORM & Modélisation",
+      tab: "backend",
+      progress: 82,
+      link: "https://github.com/samarkand-fr/CRM-epic-events",
+    },
+    {
+      id: "docker",
+      icon: <SiDocker className="text-[#2496ED]" />,
+      title: "Docker",
+      category: "Conteneurisation",
+      tab: "devops",
+      progress: 82,
+      link: "https://github.com/samarkand-fr/Python-OC-Lettings-FR",
+    },
+    {
+      id: "githubactions",
+      icon: <SiGithubactions className="text-[#2088FF]" />,
+      title: "GitHub Actions",
+      category: "CI/CD & Automatisation",
+      tab: "devops",
+      progress: 85,
+      link: "https://github.com/samarkand-fr/Python-OC-Lettings-FR",
+    },
+    {
+      id: "pytest",
+      icon: <SiPytest className="text-[#0A9EDC]" />,
+      title: "Pytest & Pytest-Cov",
+      category: "Tests (>80% couv.)",
+      tab: "quality",
+      progress: 88,
+      link: "https://github.com/samarkand-fr/Python-OC-Lettings-FR",
+    },
+    {
+      id: "security",
+      icon: <FaShieldAlt className="text-[#b85757]" />,
+      title: "RBAC & Argon2id",
+      category: "Sécurité & OWASP",
+      tab: "quality",
+      progress: 84,
+      link: "https://github.com/samarkand-fr/CRM-epic-events",
+    },
+    {
+      id: "sentry",
+      icon: <SiSentry className="text-[#362D59] dark:text-[#9B87F5]" />,
+      title: "Sentry.io",
+      category: "Monitoring d'erreurs",
+      tab: "devops",
       progress: 80,
-      link: "https://github.com/samarkand-fr/Front-End-Fisheye",
+      link: "https://github.com/samarkand-fr/Python-OC-Lettings-FR",
     },
     {
-      id: 4,
-      src: reactImage,
-      title: "React",
-      style: "shadow-sky-400",
-      progress: 80,
-      link: "https://example.com/react-projects",
-    },
-    {
-      id: 5,
-      src: node,
-      title: "NodeJs",
-      style: "shadow-lime-400",
-      progress: 50,
-      link: "https://github.com/samarkand-fr/react-ecommerce/tree/main/src/backend",
-    },
-    {
-      id: 6,
-      src: nextjs,
-      title: "Next JS",
-      style: "shadow-white",
-      progress: 40,
-      link: "https://github.com/samarkand-fr/next-movie",
-    },
-    {
-      id: 7,
-      src: restApi,
-      title: "Rest Api",
-      style: "shadow-blue-200",
-      progress: 70,
-      link: "https://example.com/rest-api-projects",
-    },
-    {
-      id: 8,
-      src: github,
-      title: "GitHub",
-      style: "shadow-gray-700",
-      progress: 75,
+      id: "git",
+      icon: <FaGitAlt className="text-[#F05032]" />,
+      title: "Git & GitHub",
+      category: "Versioning & Reviews",
+      tab: "devops",
+      progress: 88,
       link: "https://github.com/samarkand-fr",
     },
     {
-      id: 9,
-      src: tailwind,
-      title: "Tailwind",
-      style: "shadow-cyan-400",
-      progress: 70,
-      link: "https://github.com/samarkand-fr/WeShop",
+      id: "sqlite",
+      icon: <SiSqlite className="text-[#003B57]" />,
+      title: "SQLite",
+      category: "Persistance locale",
+      tab: "backend",
+      progress: 85,
+      link: "https://github.com/samarkand-fr/chess-tournaments-manager",
     },
     {
-      id: 10,
-      src: express,
-      title: "Express",
-      style: "shadow-white",
-      progress: 60,
-      link: "https://github.com/samarkand-fr/Auth-App/tree/main/Backend",
+      id: "render",
+      icon: <SiRender className="text-[#46E3B7]" />,
+      title: "Render Cloud",
+      category: "Hébergement Prod",
+      tab: "devops",
+      progress: 80,
+      link: "https://python-oc-lettings-fr-omgd.onrender.com",
     },
     {
-      id: 11,
-      src: mongodb,
-      title: "MongoDB",
-      style: "shadow-green-500",
-      progress: 70,
-      link: "https://github.com/samarkand-fr/react-ecommerce",
+      id: "react",
+      icon: <SiJavascript className="text-[#61DAFB]" />,
+      title: "React 18",
+      category: "Composants & SPA",
+      tab: "frontend",
+      progress: 82,
+      link: "https://github.com/samarkand-fr/wealth-health",
     },
     {
-      id: 12,
-      src: redux,
-      title: "Redux",
-      style: "shadow-violet-500",
-      progress: 65,
-      link: "https://github.com/samarkand-fr/Argent-Bank-P13/tree/main/src/Redux",
+      id: "redux",
+      icon: <SiRedux className="text-[#764ABC]" />,
+      title: "Redux Toolkit",
+      category: "State Management",
+      tab: "frontend",
+      progress: 80,
+      link: "https://github.com/samarkand-fr/wealth-health",
+    },
+    {
+      id: "typescript",
+      icon: <SiTypescript className="text-[#3178C6]" />,
+      title: "TypeScript",
+      category: "Typage statique",
+      tab: "frontend",
+      progress: 75,
+      link: "https://github.com/samarkand-fr/GlobeTrek",
+    },
+    {
+      id: "tailwind",
+      icon: <SiTailwindcss className="text-[#06B6D4]" />,
+      title: "Tailwind CSS",
+      category: "UI & Kufiye Styling",
+      tab: "frontend",
+      progress: 88,
+      link: "https://github.com/samarkand-fr/tatreez",
     },
   ];
+
+  const filteredTechs =
+    activeTab === "all" ? techs : techs.filter((t) => t.tab === activeTab);
 
   return (
     <div
       name="experience"
-      className="bg-gradient-to-t from-sky-100 to-black w-full h-screen experience"
+      className={`
+        relative min-h-screen flex flex-col items-center justify-center px-6 md:px-12 py-24
+        transition-colors duration-500
+        ${
+          theme === "dark"
+            ? "bg-[#0f0f0f] text-[#e5e5e5]"
+            : "bg-white text-[#0f0f0f]"
+        }
+      `}
     >
-      <div className="max-w-screen-lg mx-auto p-4 flex flex-col justify-center w-full h-full text-white">
-        <div className="pb-8 mt-5">
-          <p className="text-4xl font-bold border-b-4 border-rust p-2 inline">
-            Experiences
+      <KufiyaBackground />
+
+      <div className="relative max-w-6xl w-full z-10">
+        {/* EN-TÊTE */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="pb-6 text-center mt-8 md:mt-12"
+        >
+          <h2
+            className="text-4xl md:text-5xl font-bold inline-block border-b-4 pb-2"
+            style={{
+              borderColor: theme === "dark" ? "#b85757" : "#4fa27d",
+            }}
+          >
+            Experience & Stack
+          </h2>
+          <p className="mt-4 text-base md:text-lg text-gray-600 dark:text-gray-100 font-medium max-w-2xl mx-auto">
+            Technologies maîtrisées et mises en pratique sur des architectures réelles : Python, Django, PostgreSQL, Docker, CI/CD et React.
           </p>
+        </motion.div>
+
+        {/* ONGLETS DE FILTRAGE */}
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
+          {[
+            { key: "all", label: "Toutes les technologies" },
+            { key: "backend", label: "Python & Backend" },
+            { key: "devops", label: "DevOps & Cloud" },
+            { key: "quality", label: "Qualité & Sécurité" },
+            { key: "frontend", label: "Frontend & UI" },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`
+                px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-300
+                ${
+                  activeTab === tab.key
+                    ? "bg-gradient-to-r from-[#b85757] to-[#4fa27d] text-white shadow-md scale-105"
+                    : "bg-gray-100 dark:bg-white/10 border border-gray-200 dark:border-white/20 text-gray-800 dark:text-white hover:border-[#4fa27d]"
+                }
+              `}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
-        <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-8 text-center py-8 px-12 sm:px-0">
-          {techs.map(({ id, src, title, style, progress, link }, index) => (
+        {/* GRILLE DES TECHNOLOGIES */}
+        <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 py-4">
+          {filteredTechs.map((tech, index) => (
             <TechnologyCard
-              key={id}
-              src={src}
-              title={title}
-              style={style}
-              progress={progress}
-              link={link}
-              delay={index * 0.3} // Delay for staggered appearance
+              key={tech.id}
+              icon={tech.icon}
+              title={tech.title}
+              category={tech.category}
+              progress={tech.progress}
+              link={tech.link}
+              delay={index * 0.05}
             />
           ))}
         </div>
